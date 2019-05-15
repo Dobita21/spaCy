@@ -28,7 +28,7 @@ class ThaiTokenizer(DummyTokenizer):
         self.vocab = nlp.vocab if nlp is not None else cls.create_vocab(nlp)
 
     def __call__(self, text):
-        words = list(self.word_tokenize(text, "newmm"))
+        words = list(self.word_tokenize(text))
         spaces = [False] * len(words)
         return Doc(self.vocab, words=words, spaces=spaces)
 
@@ -40,7 +40,7 @@ class ThaiDefaults(Language.Defaults):
     lex_attr_getters[NORM] = add_lookups(
         Language.Defaults.lex_attr_getters[NORM], BASE_NORMS, NORM_EXCEPTIONS
     )
-    tokenizer_exceptions = dict(TOKENIZER_EXCEPTIONS)
+    tokenizer_exceptions = update_exc(BASE_EXCEPTIONS, TOKENIZER_EXCEPTIONS)
     tag_map = TAG_MAP
     stop_words = STOP_WORDS
 
